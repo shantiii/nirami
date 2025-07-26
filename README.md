@@ -3,8 +3,8 @@ its real fukin annoying
 
 ## development
 
-make a symlink to the cart in your pico-8 directory
+Make a hardlink to the cart in your pico-8 directory.
 
 ```
-ln -s ~/shantiii/nirami/nirami.p8 ~/Library/Application\ Support/pico-8/carts/
+ln $PWD/nirami.p8 ~/Library/Application\ Support/pico-8/carts/nirami.p8
 ```
