@@ -90,6 +90,10 @@ first person
 Does sidescrolling work here?
 -?
 
+start with a text adventure?
+- that lets us test out the encounters, we can iterate on the navigation component later
+- rather super simple navigation component
+
 --
 
 untitled goose game vibes

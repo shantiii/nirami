@@ -4,20 +4,18 @@ __lua__
 
 function _init()
  dialog = {
-  [1] = "hora!",
-  [2] = "e...",
+  [1] = "it's a lovely day\nin northern tokyo",
+  [2] = "and you are a\nhorrible gaijin",
   [3] = "where from?"
  }
  current_line = 1
- button_pressed = false
-end
+end 
 
 function _update()
- if btn(0) and button_pressed == false then
+ if btnp(0)
+ then
   current_line += 1
-  button_pressed = true
  else
-  button_pressed = false
  end
 end
 
@@ -26,6 +24,8 @@ function _draw()
  print(dialog[current_line])
 end
 
+-->8
+---where is this?
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
