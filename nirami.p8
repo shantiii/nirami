@@ -5,8 +5,13 @@ __lua__
 #include dialog.lua
 
 -- utils
-
 function to_screen(x) return x*8+24 end
+
+-- the scene state machine
+
+function sce_init()
+ sce_state = 0 -- 0: dialog, 1: world
+end
 
 -- the camera offset
 
@@ -23,10 +28,26 @@ function pla_init()
 end
 
 function cam_update()
- if btnp(0) and cam_x > 0 then cam_x -= 1 end --left
- if btnp(1) and cam_x < 2 then cam_x += 1 end --right
- if btnp(2) and cam_y > 0 then cam_y -= 1 end --up
- if btnp(3) and cam_y < 3 then cam_y += 1 end --down
+ if btnp(0) then --left
+  if cam_x > 0 and pla_x < 2 then cam_x -= 1
+  else if pla_x > 1 then pla_x -= 1 end
+  end
+ end
+ if btnp(1) then --right
+  if cam_x < 2 and pla_x > 6 then cam_x += 1
+  else if pla_x < 8 then pla_x += 1 end
+  end
+ end
+ if btnp(2) then --up
+  if cam_y > 0 and pla_y < 2 then cam_y -= 1
+  else if pla_y > 1 then pla_y -= 1 end
+  end
+ end
+ if btnp(3) then --down
+  if cam_y < 3 and pla_y > 6 then cam_y += 1
+   else if pla_y < 8 then pla_y += 1 end
+  end
+ end
 end
 
 function pla_draw()
@@ -61,6 +82,7 @@ function map_draw()
 end
 
 function _init()
+ sce_init()
  pla_init()
  cam_init()
  map_init()
@@ -73,7 +95,11 @@ function _init()
 end 
 
 function _update()
- cam_update()
+ if (sce_state == 1) then
+  -- we are in the world scene
+  cam_update()
+ end
+
  if btnp(0)
  then
  dia_update(dialog_state, true)
@@ -85,7 +111,9 @@ function _draw()
  cls()
  map_draw()
  pla_draw()
- dia_render(dialog_state)
+ if (sce_state == 0) then
+  dia_render(dialog_state)
+ end
 end
 
 -->8
