@@ -2,26 +2,28 @@ pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
 
+#include dialog.lua
+
 function _init()
- dialog = {
-  [1] = "it's a lovely day\nin northern tokyo",
-  [2] = "and you are a\nhorrible gaijin",
-  [3] = "where from?"
+ local forest = {
+  [1] = {"it's a lovely day\nin northern tokyo", "and you are a\nhorrible gaijin", 2},
+  [2] = nil,
+  [3] = "where from?",
  }
- current_line = 1
+ dialog_state = dia_init(forest)
 end 
 
 function _update()
  if btnp(0)
  then
-  current_line += 1
+ dia_update(dialog_state, true)
  else
  end
 end
 
 function _draw()
  cls()
- print(dialog[current_line])
+ dia_render(dialog_state)
 end
 
 -->8
