@@ -8,7 +8,7 @@ __lua__
 
 function to_screen(x) return x*8+24 end
 
--- the camera state
+-- the camera offset
 
 function cam_init()
  cam_x = 0
@@ -22,11 +22,11 @@ function pla_init()
  pla_y = 4
 end
 
-function pla_update()
+function cam_update()
  if btnp(0) and cam_x > 0 then cam_x -= 1 end --left
  if btnp(1) and cam_x < 2 then cam_x += 1 end --right
  if btnp(2) and cam_y > 0 then cam_y -= 1 end --up
- if btnp(3) and cam_y < 0 then cam_y += 1 end --down
+ if btnp(3) and cam_y < 3 then cam_y += 1 end --down
 end
 
 function pla_draw()
@@ -44,7 +44,10 @@ function map_init()
   {17,17,17,18,1,1,2,1,1,1,1},
   {17,17,17,18,1,1,2,1,1,1,1},
   {17,20,17,18,1,1,2,1,1,1,1},
-  {17,36,17,18,1,1,2,1,1,1,1}
+  {17,36,17,18,1,1,2,1,1,1,1},
+  {17,17,17,18,1,1,2,1,1,1,1},
+  {17,17,17,18,1,1,2,1,1,1,1},
+  {17,17,17,18,1,1,2,1,1,1,1}
  }
 end
 
@@ -70,7 +73,7 @@ function _init()
 end 
 
 function _update()
- pla_update()
+ cam_update()
  if btnp(0)
  then
  dia_update(dialog_state, true)
