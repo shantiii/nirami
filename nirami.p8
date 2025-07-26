@@ -81,16 +81,47 @@ function map_draw()
  end
 end
 
+-- the ojisan
+
+function oji_init()
+ oji_x = 0
+ oji_y = 0
+ oji_state = 0 -- 0: idle, 1: jama
+end
+
+function oji_update()
+ if oji_state == 0 then
+  if pla_x > 4 then
+   oji_x = 6
+   oji_y = pla_y
+   oji_state = 1 --jama
+   sce_state = 0 -- dialog
+   -- start the dialog
+   dialog_state.tree = 5 -- start oji_san dialogue
+  end
+ end
+end
+
+function oji_draw()
+ if oji_state == 1 then --jama
+  spr(6, to_screen(oji_x), to_screen(oji_y))
+ end
+end
+
+-- the main game hooks
+
 function _init()
  sce_init()
  pla_init()
  cam_init()
  map_init()
+ oji_init()
  local forest = {
   [1] = {"it's a lovely day\nin northern tokyo", "and you are a\nhorrible gaijin", 2},
   [2] = {{prompt = "Do you want to\ngo outside?", options = {{"Yes", 3}, {"No", 4}}}},
   [3] = {"Ugh it's horrible out.", nil},
   [4] = {"You toss and turn\n, but eventually you\n get restless.", 2},
+  [5] = {"hora!", "you can't just walk out\ninto the street!", nil},
  }
  dialog_state = dia_init(forest)
 end 
@@ -99,6 +130,7 @@ function _update()
  if (sce_state == 1) then
   -- we are in the world scene
   cam_update()
+  oji_update()
  elseif (sce_state == 0) then
   dia_update(dialog_state, dia_input())
  end
@@ -108,6 +140,7 @@ function _draw()
  cls()
  map_draw()
  pla_draw()
+ oji_draw()
  if (sce_state == 0) then
   dia_draw(dialog_state)
  end
