@@ -88,8 +88,9 @@ function _init()
  map_init()
  local forest = {
   [1] = {"it's a lovely day\nin northern tokyo", "and you are a\nhorrible gaijin", 2},
-  [2] = nil,
-  [3] = "where from?",
+  [2] = {{prompt = "Do you want to\ngo outside?", options = {{"Yes", 3}, {"No", 4}}}},
+  [3] = {"Ugh it's horrible out.", nil},
+  [4] = {"You toss and turn\n, but eventually you\n get restless.", 2},
  }
  dialog_state = dia_init(forest)
 end 
@@ -98,12 +99,8 @@ function _update()
  if (sce_state == 1) then
   -- we are in the world scene
   cam_update()
- end
-
- if btnp(0)
- then
- dia_update(dialog_state, true)
- else
+ elseif (sce_state == 0) then
+  dia_update(dialog_state, dia_input())
  end
 end
 
@@ -112,7 +109,7 @@ function _draw()
  map_draw()
  pla_draw()
  if (sce_state == 0) then
-  dia_render(dialog_state)
+  dia_draw(dialog_state)
  end
 end
 
