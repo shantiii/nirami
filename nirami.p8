@@ -2,7 +2,29 @@ pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
 
+function _init()
+ dialog = {
+  [1] = "hora!",
+  [2] = "e...",
+  [3] = "where from?"
+ }
+ current_line = 1
+ button_pressed = false
+end
 
+function _update()
+ if btn(0) and button_pressed == false then
+  current_line += 1
+  button_pressed = true
+ else
+  button_pressed = false
+ end
+end
+
+function _draw()
+ cls()
+ print(dialog[current_line])
+end
 
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
